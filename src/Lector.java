@@ -4,7 +4,7 @@ import java.util.function.Predicate;
 
 public class Lector extends User{
     
-    private List<Course> courses_array = new ArrayList<>(4);
+    private List<Course> courses_array = new ArrayList<>();
     private lectorType type;
     public enum lectorType {
         DOCENT,
@@ -25,21 +25,23 @@ public class Lector extends User{
         this.type = type;
     }
     
-    public Course addCourse(String name, Lector assistance, Lector lector){
+    public boolean addCourse(String name){
+        if(courses_array.size() >=4) return false;
         Predicate<Course>  checkCourse = (Course) -> Course.getName().equalsIgnoreCase(name);
         for(Course element: courses_array){
-           if(checkCourse.test(element)){
-               return null;
-           }
+           if(checkCourse.test(element)) return false;
         }
-        Course course = new Course(name,assistance,lector);
-        courses_array.add(course);
-        return course;
-
+        courses_array.add(new Course(name));
+        return true;
     }
     public boolean deleteCourse(String name){
-
-      return false;
+        if(courses_array.isEmpty()) return false;
+        Predicate<Course> checkCourse = (course) -> course.getName().equalsIgnoreCase(name);
+        for(Course element: courses_array){
+            if(checkCourse.test(element)) courses_array.remove(element);
+            return true;
+        }
+        return false;
     }
     
 }

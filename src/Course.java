@@ -1,5 +1,7 @@
+import javax.naming.LimitExceededException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
 public class Course{
@@ -18,8 +20,23 @@ public class Course{
         this.lector = lector;
     }
 
+    public void  printStudentArray(){
+        for (Student element : student_array){
+            System.out.print("[" +element.getId() + ", " + element.getFirstName() + ", " + element.getLastName()+"]");
+            System.out.println();
+        }
+    }
+
     public String getName() {
         return name;
+    }
+
+    public Lector getAssistance() {
+        return assistance;
+    }
+
+    public Lector getLector() {
+        return lector;
     }
 
     public void setAssistance(Lector assistance) {
@@ -30,23 +47,33 @@ public class Course{
         this.lector = lector;
     }
 
-    public Student addStudentToCourse(String facNumber, int id, String firstName, String lastName){
-        if(student_array.size() >= 30) return null;
+
+
+    public boolean addStudentToCourse(String facNumber, int id, String firstName, String lastName)   {
+        if(student_array.size() >= 30) return false;
         Predicate<Student> checkStudent = (Student) -> (Student.getId() == id && Student.getLastName().equalsIgnoreCase(lastName)
         && Student.getFirstName().equalsIgnoreCase(firstName));
         for(Student element: student_array){
             if(checkStudent.test(element)){
-                return null;
+
+                return false;
             }
         }
         Student newStudent = new Student(facNumber, id, firstName, lastName);
         student_array.add(newStudent);
-        return newStudent;
+        return true;
     }
-    public Student deleteStudentFromCourse(){
-        if(student_array.isEmpty()) return null;
-        Predicate<Student> checkStudent = (Student) -> Student.getId() ==
+    public boolean deleteStudentFromCourse(int id, String firstName, String lastName){
+        if(student_array.isEmpty()) return false;
+        Predicate<Student> checkStudent = (Student) -> (Student.getId() == id && Student.getLastName().equalsIgnoreCase(lastName)
+                && Student.getFirstName().equalsIgnoreCase(firstName));
+        for(Student element: student_array){
+            if(checkStudent.test(element)){
+                student_array.remove(element);
+                return true;
+            }
+        }
+        return false;
     }
-
 
 }

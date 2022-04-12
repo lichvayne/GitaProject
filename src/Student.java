@@ -1,9 +1,11 @@
 import javax.lang.model.type.NullType;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class Student extends User{
     private String facNumber;
-    private Course [] courses_Array = new Course[10];
+    private List<Course> courses_Array = new ArrayList<>();
 
     public Student() {
     }
@@ -12,6 +14,13 @@ public class Student extends User{
         super(id,firstName,lastName);
         this.facNumber = facNumber;
 
+    }
+    public void  printCoursesArray(){
+        for (Course element : courses_Array){
+            System.out.print("[ Course: " +element.getName() + ", Assistance: " + element.getAssistance().getFirstName() + " " +element.getAssistance().getLastName()
+                    + ", Lector: " + element.getLector().getFirstName() + ", " + element.getLector().getLastName()+" ]");
+            System.out.println();
+        }
     }
 
     public String getFacNumber() {
@@ -22,30 +31,24 @@ public class Student extends User{
         this.facNumber = facNumber;
     }
 
-    public Course[] getCourses_Array() {
-        return courses_Array;
-    }
-
-    public void setCourses_Array(Course[] courses_Array) {
-        this.courses_Array = courses_Array;
-    }
 
     public boolean addCourse(String name, Lector assistance, Lector lector){
-        for(int i = 0; i<courses_Array.length; i++){
-            if(courses_Array[i] == null){
-                courses_Array[i] = new Course(name,assistance,lector);
-                return true;
+
+            if(courses_Array.size() >= 10) return false;
+            Predicate<Course> checkCourse = (course) -> course.getName().equalsIgnoreCase(name);
+            for(Course element: courses_Array){
+                if(checkCourse.test(element)) return false;
             }
-        }
-        return false;
+            courses_Array.add(new Course(name,assistance,lector));
+            return true;
     }
-    public boolean deleteCourse(String name, Lector assistance, Lector lector){
-        Predicate<Course> courseCheck = course -> course.getName().equals(name);
-        for (int i = 0;i<courses_Array.length;i++){
-            if(courses_Array[i]!=null && courseCheck.test(courses_Array[i])){
-                courses_Array[i] = null;
-                return true;
-            }
+
+    public boolean deleteCourse(String name){
+        if(courses_Array.isEmpty()) return false;
+        Predicate<Course> checkCourse = (course) -> course.getName().equalsIgnoreCase(name);
+        for(Course element: courses_Array){
+            if(checkCourse.test(element)) courses_Array.remove(element);
+            return true;
         }
         return false;
     }

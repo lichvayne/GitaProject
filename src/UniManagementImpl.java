@@ -3,10 +3,10 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class UniManagementImpl implements UniManagement{
-   private  List<Student> students_array= new ArrayList<>();
-   private  List<Course>  courses_array = new ArrayList<>();
-   private  List<Lector>  assistance_array = new ArrayList<>();
-   private  List<Lector>  lectors_array  = new ArrayList<>();
+   private  Student [] students_array= new Student[1000];
+   private  Course  [] courses_array = new Course[10];
+   private  Lector  [] assistance_array;
+   private  Lector  [] lectors_array;
    private  int lastUsedStudentIndex;
    private  int lastUsedCourseIndex;
    private  int lastUsedAssistanceIndex;
@@ -14,28 +14,28 @@ public class UniManagementImpl implements UniManagement{
 
    @Override
    public Course createCourse(String courseName) {
-      if(courses_array.size() >= 10) return null;
       Predicate<Course> checkCourse = (Course) -> Course.getName().equalsIgnoreCase(courseName);
       for(Course element: courses_array){
          if(checkCourse.test(element)){
             return null;
          }
       }
-      Course newCourse = new Course(courseName);
-      courses_array.add(lastUsedCourseIndex, newCourse);
+      courses_array[lastUsedCourseIndex] = new Course(courseName);
       lastUsedCourseIndex++;
-      return newCourse;
+      return  courses_array[lastUsedCourseIndex-1];
    }
 
    @Override
    public boolean deleteCourse(String courseName){
-      if(!courses_array.isEmpty()){
+         int indexCounter = 0;
          Predicate<Course> checkCourse = (Course) -> Course.getName().equalsIgnoreCase(courseName);
          for(Course element: courses_array){
-            if(checkCourse.test(element)){
-               courses_array.remove(element);
-               lastUsedCourseIndex--;
+
+            if(checkCourse.test(element) && element != null){
+               //TODO
+
             }
+            indexCounter++;
          }
       }
       return false;
