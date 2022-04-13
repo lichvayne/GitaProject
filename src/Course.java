@@ -49,24 +49,25 @@ public class Course{
 
 
 
-    public boolean addStudentToCourse(String facNumber, int id, String firstName, String lastName)   {
+    public boolean addStudentToCourse(Student student)   {
+
         if(student_array.size() >= 30) return false;
-        Predicate<Student> checkStudent = (Student) -> (Student.getId() == id && Student.getLastName().equalsIgnoreCase(lastName)
-        && Student.getFirstName().equalsIgnoreCase(firstName));
+        Predicate<Student> checkStudent = (Student) -> (Student.getId() == student.getId() && Student.getLastName().equalsIgnoreCase(student.getLastName())
+        && Student.getFirstName().equalsIgnoreCase(student.getFirstName()));
         for(Student element: student_array){
             if(checkStudent.test(element)){
 
                 return false;
             }
         }
-        Student newStudent = new Student(facNumber, id, firstName, lastName);
+        Student newStudent = new Student(student.getFacNumber(), student.getId(), student.getFirstName(), student.getLastName());
         student_array.add(newStudent);
         return true;
     }
-    public boolean deleteStudentFromCourse(int id, String firstName, String lastName){
+    public boolean deleteStudentFromCourse(Student student){
         if(student_array.isEmpty()) return false;
-        Predicate<Student> checkStudent = (Student) -> (Student.getId() == id && Student.getLastName().equalsIgnoreCase(lastName)
-                && Student.getFirstName().equalsIgnoreCase(firstName));
+        Predicate<Student> checkStudent = (Student) -> (Student.getId() == student.getId() && Student.getLastName().equalsIgnoreCase(student.getLastName())
+                && Student.getFirstName().equalsIgnoreCase(student.getLastName()));
         for(Student element: student_array){
             if(checkStudent.test(element)){
                 student_array.remove(element);
