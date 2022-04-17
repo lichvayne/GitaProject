@@ -14,17 +14,36 @@ public class UniManagementImpl implements UniManagement {
 
 
     public void printCoursesArray() {
-        for (Course element : courses_array) {
-            if (element != null) System.out.print(element.getName() + " ");
-            else System.out.print("null ");
+        System.out.println("---Courses Database---");
+        for(Course element:courses_array){
+            if(element != null)
+                System.out.println(" Course: "+element.getName()  );
 
         }
 
     }
     public void printStudentsArray(){
-        for (Student element : students_array) {
-            if (element != null) System.out.println( element.getId() + " " + element.getFirstName() + " " + element.getLastName() + " " +element.getFacNumber() );
-            else System.out.println("null ");
+        System.out.println("---Students Database---");
+        for(Student element:students_array){
+            if(element != null)
+                System.out.println("[ ID: " + element.getId() + ", FacNumber: " +element.getFacNumber() + ", FirstName: " +element.getFirstName() + ", LastName: " + element.getLastName() + "]");
+
+        }
+    }
+    public void printAssistanceArray(){
+        System.out.println("---Assistances Database---");
+        for(Lector element:assistance_array){
+            if(element != null)
+                System.out.println("[ ID: " + element.getId() + ", FirstName: " +element.getFirstName() + ", LastName: " + element.getLastName() + "]");
+
+        }
+    }
+    public void printLectorArray(){
+        System.out.println("---Lectors Database---");
+        for(Lector element:lectors_array){
+            if(element != null)
+                System.out.println("[ ID: " + element.getId() + ", FirstName: " +element.getFirstName() +
+                        ", LastName: " + element.getLastName() + ", LectorType: " +element.getType()+ "]");
 
         }
     }
@@ -42,6 +61,7 @@ public class UniManagementImpl implements UniManagement {
         Course newCourse = new Course(courseName);
         courses_array[lastUsedCourseIndex] = newCourse;
         lastUsedCourseIndex++;
+        printCoursesArray();
         return newCourse;
     }
 
@@ -62,7 +82,7 @@ public class UniManagementImpl implements UniManagement {
 
                 }
                 lastUsedCourseIndex--;
-
+                printCoursesArray();
                 return true;
             }
             indexCounter++;
@@ -81,9 +101,11 @@ public class UniManagementImpl implements UniManagement {
                 }
             }
         }
+
         Student newStudent = new Student(facNumber,id,firstName,lastName);
         students_array[lastUsedStudentIndex] = newStudent;
         lastUsedStudentIndex++;
+        printStudentsArray();
         return newStudent;
 
     }
@@ -105,11 +127,14 @@ public class UniManagementImpl implements UniManagement {
 
                 }
                 lastUsedStudentIndex--;
-
+                System.out.println("---Students Database---");
+                printStudentsArray();
                 return true;
             }
             indexCounter++;
         }
+        
+        
         throw new IllegalArgumentException("This Student Doesn't Exist");
 
     }
@@ -127,6 +152,7 @@ public class UniManagementImpl implements UniManagement {
         Lector newAssistance = new Lector(id,firstName,lastName, Lector.lectorType.ASSISTANCE);
         assistance_array[lastUsedAssistanceIndex] = newAssistance;
         lastUsedAssistanceIndex++;
+        printAssistanceArray();
         return newAssistance;
     }
 
@@ -147,12 +173,54 @@ public class UniManagementImpl implements UniManagement {
 
                 }
                 lastUsedAssistanceIndex--;
+                printAssistanceArray();
 
                 return true;
             }
             indexCounter++;
         }
         throw new IllegalArgumentException("This Assistance Doesn't Exist");
+    }
+
+    public Lector createProfessor(int id, String firstName, String lastName, Lector.lectorType type){
+        Predicate<Lector> checkLector = (Lector) -> (Lector.getId() == id && Lector.getLastName().equalsIgnoreCase(lastName));
+        for (Lector element : lectors_array) {
+            if (element != null) {
+                if (checkLector.test(element)) {
+                    throw new IllegalArgumentException("Lector With this ID and LastName Already Exists");
+                }
+            }
+        }
+        Lector newLector = new Lector(id,firstName,lastName, type);
+        lectors_array[lastUsedLectorIndex] = newLector;
+        lastUsedLectorIndex++;
+        printLectorArray();
+        return newLector;
+    }
+
+    public boolean deleteProfessor(int id){
+        if (lectors_array.length == 0) return false;
+        int indexCounter = 0;
+        Predicate<Lector> checkLector = (Lector) -> (Lector.getId() == id);
+        for (Lector element : lectors_array) {
+            if (element != null && checkLector.test(element)) {
+                for (int i = indexCounter; i < lectors_array.length; i++) {
+                    if (indexCounter == lectors_array.length - 1) {
+                        lectors_array[indexCounter] = null;
+                        break;
+                    }
+                    lectors_array[indexCounter] = lectors_array[indexCounter + 1];
+                    indexCounter++;
+
+                }
+                lastUsedLectorIndex--;
+                printLectorArray();
+
+                return true;
+            }
+            indexCounter++;
+        }
+        throw new IllegalArgumentException("This Lector Doesn't Exist");
     }
 
     @Override
