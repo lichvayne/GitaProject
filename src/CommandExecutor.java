@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class CommandExecutor {
@@ -7,6 +8,7 @@ public class CommandExecutor {
         UniManagementImpl uniManagement = new UniManagementImpl();
         String command;
         ArgumentParser argumentParser = new ArgumentParser();
+        System.out.println("Enter Your Command!");
         while (sc.hasNext()) {
             command = sc.nextLine().trim();
             argumentParser.parseArguments(command);
@@ -34,8 +36,17 @@ public class CommandExecutor {
             if (command.contains(ArgumentParser.DELETE_PROFESSOR)) {
                 uniManagement.deleteProfessor(argumentParser.getID());
             }
-            if (command.contains(argumentParser.ASIGHSTUDENTTOCOURSE)){
-                //TODO
+            if (command.contains(ArgumentParser.ASIGHSTUDENTTOCOURSE)) {
+                uniManagement.addStudentToCourse(uniManagement.getStudent(argumentParser.getID()), uniManagement.getCourse(argumentParser.getCourseName()));
+            }
+            if (command.contains(ArgumentParser.REMOVESTUDENTFROMCOURSE)) {
+                uniManagement.removeStudentFromCourse(uniManagement.getStudent(argumentParser.getID()), uniManagement.getCourse(argumentParser.getCourseName()));
+            }
+            if(command.contains(ArgumentParser.ASIGHASSISTANCETOCOURSE)){
+                uniManagement.asighAssistanceToCourse(uniManagement.getAssistance(argumentParser.getID()),uniManagement.getCourse(argumentParser.getCourseName()));
+            }
+            if(command.contains(ArgumentParser.ASIGHPROFESSORTOCOURSE)){
+                uniManagement.asighProfessorToCourse(uniManagement.getProfessor(argumentParser.getID()),uniManagement.getCourse(argumentParser.getCourseName()));
             }
         }
 

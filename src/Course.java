@@ -21,9 +21,17 @@ public class Course{
     }
 
     public void  printStudentArray(){
+        System.out.println("---Course With Students---");
+        if(getAssistance() != null){
+            System.out.println("Assistance: " + getAssistance().getId() + " " + getAssistance().getFirstName() + " " + getAssistance().getLastName());
+
+        }
+        if(getLector() != null){
+            System.out.println("Lector: " + getLector().getId() + " " + getLector().getLastName() + " " + getLector().getLastName());
+        }
+
         for (Student element : student_array){
-            System.out.print("[" +element.getId() + ", " + element.getFirstName() + ", " + element.getLastName()+"]");
-            System.out.println();
+            System.out.println("[" +element.getId() + ", " + element.getFirstName() + ", " + element.getLastName()+"]");
         }
     }
 
@@ -66,8 +74,7 @@ public class Course{
     }
     public boolean deleteStudentFromCourse(Student student){
         if(student_array.isEmpty()) return false;
-        Predicate<Student> checkStudent = (Student) -> (Student.getId() == student.getId() && Student.getLastName().equalsIgnoreCase(student.getLastName())
-                && Student.getFirstName().equalsIgnoreCase(student.getLastName()));
+        Predicate<Student> checkStudent = (Student) -> (Student.getId() == student.getId());
         for(Student element: student_array){
             if(checkStudent.test(element)){
                 student_array.remove(element);
@@ -76,5 +83,6 @@ public class Course{
         }
         return false;
     }
+
 
 }

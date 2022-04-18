@@ -133,8 +133,8 @@ public class UniManagementImpl implements UniManagement {
             }
             indexCounter++;
         }
-        
-        
+
+
         throw new IllegalArgumentException("This Student Doesn't Exist");
 
     }
@@ -226,19 +226,22 @@ public class UniManagementImpl implements UniManagement {
     @Override
     public boolean asighAssistanceToCourse(Lector assistance, Course course) {
         course.setAssistance(assistance);
+        course.printStudentArray();
         return true;
     }
 
     @Override
     public boolean asighProfessorToCourse(Lector professor, Course course) {
         course.setLector(professor);
+        course.printStudentArray();
         return true;
     }
 
     @Override
     public boolean addStudentToCourse(Student student, Course course) {
-
-        return course.addStudentToCourse(student);
+        course.addStudentToCourse(student);
+        course.printStudentArray();
+        return true;
     }
 
     @Override
@@ -246,12 +249,57 @@ public class UniManagementImpl implements UniManagement {
         for(Student element: students){
             course.addStudentToCourse(element);
         }
+        course.printStudentArray();
         return true;
     }
 
     @Override
     public boolean removeStudentFromCourse(Student student, Course course) {
-        return course.deleteStudentFromCourse(student);
+        course.deleteStudentFromCourse(student);
+        course.printStudentArray();
+        return true;
     }
+
+
+    public Course getCourse(String name){
+        Predicate<Course> checkCourse = (Course) -> Course.getName().equalsIgnoreCase(name);
+        for(Course element: courses_array){
+            if(checkCourse.test(element)) {
+                return element;
+            }
+        }
+        throw new IllegalArgumentException("This Course Is Not Created");
+    }
+    public Student getStudent(int id) {
+        Predicate<Student> checkStudent = (Student) -> Student.getId() == id ;
+        for(Student element: students_array){
+            if(checkStudent.test(element) ) {
+                return element;
+            }
+        }
+        throw new IllegalArgumentException("This Student Is Not Created");
+
+    }
+    public Lector getAssistance(int id) {
+        Predicate<Lector> checkAssistance = (Lector) -> Lector.getId() == id ;
+        for(Lector element: assistance_array){
+            if(checkAssistance.test(element) ) {
+                return element;
+            }
+        }
+        throw new IllegalArgumentException("This Assistance Is Not Created");
+
+    }
+    public Lector getProfessor(int id){
+        Predicate<Lector> checkLector = (Lector) -> Lector.getId() == id ;
+        for(Lector element: lectors_array){
+            if(checkLector.test(element) ) {
+                return element;
+            }
+        }
+        throw new IllegalArgumentException("This Lector Is Not Created");
+
+    }
+
 
 }
