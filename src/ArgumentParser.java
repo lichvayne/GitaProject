@@ -10,7 +10,9 @@ public class ArgumentParser {
     public static final String ASIGHSTUDENTTOCOURSE = "asighStudentToCourse";
     public static final String REMOVESTUDENTFROMCOURSE = "removeStudentFromCourse";
     public static final String ASIGHASSISTANCETOCOURSE = "asighAssistanceToCourse";
+    public static final String REMVOVEASSISTANCEFROMCOURSE = "removeAssistanceFromCourse";
     public static final String ASIGHPROFESSORTOCOURSE = "asighProfessorToCourse";
+    public static final String REMOVEPROFESSORFROMCOURSE = "removeProfessorFromCourse";
 
 
     private int id;
@@ -50,10 +52,12 @@ public class ArgumentParser {
                 }
             }
             if(argument.contains(ASIGHSTUDENTTOCOURSE)|| argument.contains(REMOVESTUDENTFROMCOURSE) ||
-                argument.contains(ASIGHASSISTANCETOCOURSE) || argument.contains(ASIGHPROFESSORTOCOURSE)){
+                argument.contains(ASIGHASSISTANCETOCOURSE) || argument.contains(ASIGHPROFESSORTOCOURSE) ||
+                    argument.contains(REMVOVEASSISTANCEFROMCOURSE) || argument.contains(REMOVEPROFESSORFROMCOURSE)){
                 id = Integer.parseInt(array[1].trim());
                 courseName = array[2].trim();
             }
+
 
     }
     public int getID(){

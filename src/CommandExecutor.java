@@ -2,7 +2,9 @@ import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class CommandExecutor {
-    public static void main(String[] args) {
+
+
+    public  void execute() {
 
         Scanner sc = new Scanner(System.in);
         UniManagementImpl uniManagement = new UniManagementImpl();
@@ -47,6 +49,13 @@ public class CommandExecutor {
             }
             if(command.contains(ArgumentParser.ASIGHPROFESSORTOCOURSE)){
                 uniManagement.asighProfessorToCourse(uniManagement.getProfessor(argumentParser.getID()),uniManagement.getCourse(argumentParser.getCourseName()));
+            }
+            if(command.contains(ArgumentParser.REMOVESTUDENTFROMCOURSE)){
+                uniManagement.removeAssistanceFromCourse(uniManagement.getAssistance(argumentParser.getID()),uniManagement.getCourse(argumentParser.getCourseName()));
+            }
+            if(command.contains(ArgumentParser.REMOVEPROFESSORFROMCOURSE)){
+                uniManagement.removeProfessorFromCourse(uniManagement.getProfessor(argumentParser.getID()),uniManagement.getCourse(argumentParser.getCourseName()));
+
             }
         }
 

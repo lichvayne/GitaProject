@@ -127,7 +127,6 @@ public class UniManagementImpl implements UniManagement {
 
                 }
                 lastUsedStudentIndex--;
-                System.out.println("---Students Database---");
                 printStudentsArray();
                 return true;
             }
@@ -229,10 +228,20 @@ public class UniManagementImpl implements UniManagement {
         course.printStudentArray();
         return true;
     }
+    public boolean removeAssistanceFromCourse(Lector assistance, Course course){
+        course.setAssistance(null);
+        course.printStudentArray();
+        return true;
+    }
 
     @Override
     public boolean asighProfessorToCourse(Lector professor, Course course) {
         course.setLector(professor);
+        course.printStudentArray();
+        return true;
+    }
+    public boolean removeProfessorFromCourse(Lector professor,  Course course){
+        course.setLector(null);
         course.printStudentArray();
         return true;
     }
