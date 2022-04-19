@@ -249,6 +249,7 @@ public class UniManagementImpl implements UniManagement {
     @Override
     public boolean addStudentToCourse(Student student, Course course) {
         course.addStudentToCourse(student);
+        student.addCourse(course.getName(),course.getAssistance(),course.getLector());
         course.printStudentArray();
         return true;
     }
@@ -257,6 +258,7 @@ public class UniManagementImpl implements UniManagement {
     public boolean addStudentsToCourse(Student[] students, Course course) {
         for(Student element: students){
             course.addStudentToCourse(element);
+            element.addCourse(course.getName(),course.getAssistance(),course.getLector());
         }
         course.printStudentArray();
         return true;
@@ -265,6 +267,7 @@ public class UniManagementImpl implements UniManagement {
     @Override
     public boolean removeStudentFromCourse(Student student, Course course) {
         course.deleteStudentFromCourse(student);
+        student.deleteCourse(course.getName());
         course.printStudentArray();
         return true;
     }
