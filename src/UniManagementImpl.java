@@ -93,11 +93,11 @@ public class UniManagementImpl implements UniManagement {
 
     @Override
     public Student createStudent(int id, String firstName, String lastName, String facNumber) {
-        Predicate<Student> checkStudent = (Student) -> (Student.getId() == id && Student.getLastName().equalsIgnoreCase(lastName));
+        Predicate<Student> checkStudent = (Student) -> (Student.getId() == id);
         for (Student element : students_array) {
             if (element != null) {
                 if (checkStudent.test(element)) {
-                    throw new IllegalArgumentException("Student With this ID and LastName Already Exists");
+                    throw new IllegalArgumentException("Student With this ID Already Exists");
                 }
             }
         }
@@ -140,7 +140,7 @@ public class UniManagementImpl implements UniManagement {
 
     @Override
     public Lector createAssistance(int id, String firstName, String lastName) {
-        Predicate<Lector> checkAssistance = (Lector) -> (Lector.getId() == id && Lector.getLastName().equalsIgnoreCase(lastName));
+        Predicate<Lector> checkAssistance = (Lector) -> (Lector.getId() == id );
         for (Lector element : assistance_array) {
             if (element != null) {
                 if (checkAssistance.test(element)) {
@@ -182,11 +182,11 @@ public class UniManagementImpl implements UniManagement {
     }
 
     public Lector createProfessor(int id, String firstName, String lastName, Lector.lectorType type){
-        Predicate<Lector> checkLector = (Lector) -> (Lector.getId() == id && Lector.getLastName().equalsIgnoreCase(lastName));
+        Predicate<Lector> checkLector = (Lector) -> (Lector.getId() == id);
         for (Lector element : lectors_array) {
             if (element != null) {
                 if (checkLector.test(element)) {
-                    throw new IllegalArgumentException("Lector With this ID and LastName Already Exists");
+                    throw new IllegalArgumentException("Lector With this ID Already Exists");
                 }
             }
         }
@@ -225,11 +225,13 @@ public class UniManagementImpl implements UniManagement {
     @Override
     public boolean asighAssistanceToCourse(Lector assistance, Course course) {
         course.setAssistance(assistance);
+        assistance.addCourse(course.getName());
         course.printStudentArray();
         return true;
     }
     public boolean removeAssistanceFromCourse(Lector assistance, Course course){
         course.setAssistance(null);
+        assistance.deleteCourse(course.getName());
         course.printStudentArray();
         return true;
     }
@@ -237,11 +239,13 @@ public class UniManagementImpl implements UniManagement {
     @Override
     public boolean asighProfessorToCourse(Lector professor, Course course) {
         course.setLector(professor);
+        professor.addCourse(course.getName());
         course.printStudentArray();
         return true;
     }
     public boolean removeProfessorFromCourse(Lector professor,  Course course){
         course.setLector(null);
+        professor.deleteCourse(course.getName());
         course.printStudentArray();
         return true;
     }

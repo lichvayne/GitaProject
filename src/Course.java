@@ -27,7 +27,7 @@ public class Course{
 
         }
         if(getLector() != null){
-            System.out.println("Lector: " + getLector().getId() + " " + getLector().getLastName() + " " + getLector().getLastName());
+            System.out.println("Lector: " + getLector().getId() + " " + getLector().getFirstName() + " " + getLector().getLastName());
         }
 
         for (Student element : student_array){

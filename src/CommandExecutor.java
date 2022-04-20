@@ -14,6 +14,7 @@ public class CommandExecutor {
         while (sc.hasNext()) {
             command = sc.nextLine().trim();
             argumentParser.parseArguments(command);
+
             if (command.contains(ArgumentParser.CREATE_STUDENT)) {
                 uniManagement.createStudent(argumentParser.getID(), argumentParser.getFirstName(), argumentParser.getLastName(), argumentParser.getFacNumber());
             }
@@ -50,7 +51,7 @@ public class CommandExecutor {
             if(command.contains(ArgumentParser.ASIGHPROFESSORTOCOURSE)){
                 uniManagement.asighProfessorToCourse(uniManagement.getProfessor(argumentParser.getID()),uniManagement.getCourse(argumentParser.getCourseName()));
             }
-            if(command.contains(ArgumentParser.REMOVESTUDENTFROMCOURSE)){
+            if(command.contains(ArgumentParser.REMOVEASSISTANCEFROMCOURSE)){
                 uniManagement.removeAssistanceFromCourse(uniManagement.getAssistance(argumentParser.getID()),uniManagement.getCourse(argumentParser.getCourseName()));
             }
             if(command.contains(ArgumentParser.REMOVEPROFESSORFROMCOURSE)){
